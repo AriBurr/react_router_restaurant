@@ -28,9 +28,14 @@ class Menu extends React.Component {
     });
   }
 
+  addDish = (dish) => {
+    this.setState({ dishes: [dish, ...this.state.dishes] });
+  }
+
   render () {
     return (
       <Segment basic>
+        <DishForm addDish={this.addDish}/>
         <Header as='h1'>Menu</Header>
         <List>
           {this.displayDishes()}

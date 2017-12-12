@@ -3,7 +3,7 @@ import { Segment, Form, Button, Label } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
-class MenuForm extends React.Component {
+class DishForm extends React.Component {
   state = { dish: { name: '', ingredients: '', price: '' } };
 
   componentDidMount() {
@@ -34,7 +34,8 @@ class MenuForm extends React.Component {
     else
       axios.post(baseUrl, params)
         .then(res => {
-          this.props.history.push(`/dashboard`);
+          this.setState({ dish: { name: '', ingredients: '', price: '' } });
+          this.props.addDish(res.data);
         }).catch( err => {
           console.log(err);
         });
@@ -72,4 +73,4 @@ class MenuForm extends React.Component {
   }
 }
 
-export default MenuForm;
+export default DishForm;

@@ -12,7 +12,7 @@ class Api::DishesController < ApplicationController
   def create
     dish = Dish.new(dish_params)
     if dish.save
-      render json: dish, status: created
+      render json: dish
     else
       render json: dish.errors, status: 422
     end
