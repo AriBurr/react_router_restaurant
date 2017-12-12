@@ -5,13 +5,23 @@ import axios from 'axios';
 
 class Dish extends React.Component {
   state = { dish: {} };
+
   componentDidMount() {
     const dishId = this.props.match.params.id;
     axios.get(`/api/dishes/${dishId}`)
       .then( res => {
         this.setState({ dish: res.data })
       }).catch( err => {
-        console.log(err);
+        console.log(err)
+      });
+  }
+
+  deleteDish = () => {
+    axios.delete(`/api/dishes/${this.state.dish.id}`)
+      .then( res => {
+        this.props.history.push('/menu')
+      }).catch( err => {
+        console.log(err)
       });
   }
 
@@ -25,6 +35,8 @@ class Dish extends React.Component {
           <List.Item>Special Ingredient: {ingredients}</List.Item>
         </List>
           <Button as={Link} to={'/menu'}>Back to Menu</Button>
+          <Button color='red' onClick={this.deleteDish}>Delete</Button>
+          <Button as={Link} to={`/dishes/${id}/edit`} color='orange'>Edit</Button>
       </Segment>
     );
   }
@@ -40,21 +52,3 @@ class Dish extends React.Component {
 }
 
 export default Dish;
-
-// displayProduct = () => {
-//   const { id, name, price, description, department } = this.state.product;
-//
-//   return(
-//     <Segment basic>
-//       <Header as='h1'>{name}</Header>
-//       <List>
-//         <List.Item>Description: {description}</List.Item>
-//         <List.Item>Price: {price}</List.Item>
-//         <List.Item>Department: {department}</List.Item>
-//       </List>
-//       <Button as={Link} to={`/products/${id}/edit`} color='orange'>Edit</Button>
-//       <Button color='red' onClick={this.deleteProduct}>Delete</Button>
-//       <Button as={Link} to={'/dashboard'}>All Products</Button>
-//     </Segment>
-//   );
-// }
